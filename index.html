@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Conversor</title>
+</head>
+
+<body>
+    <div id="title">
+        <h1>Conversor de Temperatura</h1>
+    </div>
+    <form>
+        <div>
+            <label>Informe a temperatura:</label>
+            <input type="number" name="temperatura" id="temperatura" style="width: 3vw">
+            <select name="graus" id="graus">
+                <option value="celsius" id="celsius">°C</option>
+                <option value="fahrenheit" id="fahrenheit">°F</option>
+                <option value="kelvin" id="kelvin">K</option>
+                <option value="rankine" id="rankine">R</option>
+            </select>
+        </div>
+        <div>
+            <input type="submit" id="submit" name="converter" value="Converter">
+        </div>
+    </form>
+    <div id="table">
+        <table>
+            <thead>
+                <tr>
+                    <th id="tableCelsius">°C</th>
+                    <th id="tableFahrenheit">°F</th>
+                    <th id="tableKelvin">K</th>
+                    <th id="tableRankine">R</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    let form = document.querySelector("form")
+    let tbody = document.querySelector("tbody")
+    form.onsubmit = function () {
+        //pegar
+        let temperatura = document.querySelector("#temperatura").value
+        let graus = document.querySelector("#graus").value
+        let celsius = ""
+        let fahrenheit = ""
+        let kelvin = ""
+        let rankine = ""
+        //calcular
+        temperatura = parseFloat(temperatura)
+        if (graus == "celsius") {
+            celsius = temperatura
+            fahrenheit = (temperatura * 1.8) + 32
+            kelvin = temperatura + 273.15
+            rankine = (temperatura * 1.8) + 491.67
+        } else if (graus == "fahrenheit") {
+            celsius = (temperatura - 32) / 1.8
+            fahrenheit = temperatura
+            kelvin = ((temperatura - 32) / 1.8) + 273.15
+            rankine = temperatura + 459.67
+        } else if (graus == "kelvin") {
+            celsius = temperatura - 273.15
+            fahrenheit = ((temperatura - 273.15) / 1.8) + 32
+            kelvin = temperatura
+            rankine = ((temperatura - 273.15) * 1.8) + 491.67
+        } else if (graus == "rankine") {
+            celsius = (temperatura - 491.67) / 1.8
+            fahrenheit = temperatura - 459.67
+            kelvin = ((temperatura - 491.67) / 1.8) + 273.15
+            rankine = temperatura
+        }
+        celsius = celsius.toFixed(2)
+        fahrenheit = fahrenheit.toFixed(2)
+        kelvin = kelvin.toFixed(2)
+        rankine = rankine.toFixed(2)
+        //tabela
+        let tr = document.createElement("tr")
+        let tdCelsius = document.createElement("td")
+        let txCelsius = document.createTextNode(celsius)
+        tdCelsius.append(txCelsius)
+        tr.append(tdCelsius)
+        let tdFahrenheit = document.createElement("td")
+        let txFahrenheit = document.createTextNode(fahrenheit)
+        tdFahrenheit.append(txFahrenheit)
+        tr.append(tdFahrenheit)
+        let tdKelvin = document.createElement("td")
+        let txKelvin = document.createTextNode(kelvin)
+        tdKelvin.append(txKelvin)
+        tr.append(tdKelvin)
+        let tdRankine = document.createElement("td")
+        let txRankine = document.createTextNode(rankine)
+        tdRankine.append(txRankine)
+        tr.append(tdRankine)
+        tbody.append(tr)
+        return false
+    }
+</script>
+
+</html>
